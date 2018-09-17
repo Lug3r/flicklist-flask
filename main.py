@@ -30,7 +30,7 @@ add_form = """
         <input type="submit" value="Add It"/>
     </form>
 """
-
+movie_list = []
 # TODO:
 # Create the HTML for the form below so the user can check off a movie from their list 
 # when they've watched it.
@@ -56,7 +56,7 @@ def crossoff_movie():
 @app.route("/add", methods=['POST'])
 def add_movie():
     new_movie = request.form['new-movie']
-
+    movie_list.append(new_movie)
     # build response content
     new_movie_element = "<strong>" + new_movie + "</strong>"
     sentence = new_movie_element + " has been added to your Watchlist!"
@@ -70,7 +70,18 @@ def index():
     edit_header = "<h2>Edit My Watchlist</h2>"
 
     # build the response string
-    content = page_header + edit_header + add_form + page_footer
+    # accumulator
+    movie_content = """<ul>"""
+    # loop through the list
+    temp = "<li>{0}</li>"
+    
+    
+    for movie in movie_list:
+        # combine <li> and movie
+        movie_content += temp.format(movie)
+        # make html fragment for list
+    movie_content += "</ul>"
+    content = page_header + movie_content + edit_header + add_form + page_footer 
 
     return content
 
