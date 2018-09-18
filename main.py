@@ -41,8 +41,13 @@ crossoff_form = """
     <form action="/crossoff" method="post">
         <label for="viewed-movie">
             I want to cross off 
-            <input type="text" id="viewed-movie" name="viewed-movie"/>
-            from my watchlist.
+            <select name="cars">
+                <option value="ip man">Ip Man</option>
+                <option value="x-men">X-Men</option>
+                <option value="batman">Batman</option>
+                <option value="greenmile">Greenmile</option>
+            </select>
+           from my watchlist.
         </label>
         <input type="submit" value="Remove It"/>
     </form>
