@@ -38,8 +38,17 @@ movie_list = []
 
 # a form for crossing off watched movies
 crossoff_form = """
-
+    <form action="/crossoff" method="post">
+        <label for="viewed-movie">
+            I want to cross off 
+            <input type="text" id="viewed-movie" name="viewed-movie"/>
+            from my watchlist.
+        </label>
+        <input type="submit" value="Remove It"/>
+    </form>
 """
+
+
 
 # TODO:
 # Finish filling in the function below so that the user will see a message like:
@@ -64,6 +73,17 @@ def add_movie():
 
     return content
 
+@app.route("/crossoff", methods=['POST'])
+def remove_movie():
+    viewed_movie = request.form['viewed-movie']
+    movie_list.remove(viewed_movie)
+    # build response
+    viewed_movie_element = "<strike>" + viewed_movie + "</strike>"
+    sentence = viewed_movie_element + " has been romoved to your Watchlist!"
+    content = page_header + "<p>" + sentence + "</p>" + page_footer
+
+    return content
+
 
 @app.route("/")
 def index():
@@ -81,7 +101,7 @@ def index():
         movie_content += temp.format(movie)
         # make html fragment for list
     movie_content += "</ul>"
-    content = page_header + movie_content + edit_header + add_form + page_footer 
+    content = page_header + movie_content + edit_header + add_form + crossoff_form + page_footer 
 
     return content
 
